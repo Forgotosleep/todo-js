@@ -10,7 +10,7 @@ const port = process.env.PORT || 3030;
 const host = process.env.HOST || 'localhost';
 
 // Table Creation & Seeding
-// migration();  // Optional
+migration();
 // Seed tables
 // seed();  // Optional
 

@@ -5,7 +5,7 @@ const seed = async () => {
   try {
     const activityGroups = await db.query(
       `            
-            INSERT INTO activityGroups
+            INSERT INTO activities
               (title, email)
             VALUES
               ('group1', 'test@mail.com'),

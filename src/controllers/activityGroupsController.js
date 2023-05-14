@@ -6,7 +6,7 @@ class ActivityGroupController {
     try {
       const data = await db.query(
         `
-            SELECT * FROM activityGroups
+            SELECT *, activity_id as 'id' FROM activities
         `
       )
       return res.json(responseMaker('Success', data))
@@ -20,7 +20,7 @@ class ActivityGroupController {
       const { id } = req.params;
       const data = await db.query(
         `
-            SELECT * FROM activityGroups WHERE id = ${id}
+            SELECT *, activity_id as 'id' FROM activities WHERE activity_id = ${id}
         `
       )
       if (!data[0].length) {  // If no data is found
@@ -38,17 +38,23 @@ class ActivityGroupController {
       if (!title) {
         return res.status(400).json(responseMaker('Bad Request', {}, `title cannot be null`))
       }
-      const create = await db.query(  // create new entry in table
-        `            
-              INSERT INTO activityGroups
+
+      const connection = await db.getConnection();
+      await connection.beginTransaction()
+
+      const create = await connection.query(  // create new entry in table
+        `
+              INSERT INTO activities
                 (title, email)
               VALUES
                 ('${title}', '${email}')
           `)
 
-      const data = await db.query(  // fetch last (created) entry from table
+      await connection.commit()
+
+      const data = await connection.query(  // fetch last (created) entry from table
         `
-          SELECT * FROM activityGroups WHERE id = LAST_INSERT_ID()
+          SELECT *, activity_id as 'id' FROM activities WHERE activity_id = LAST_INSERT_ID()
         `
       )
       return res.status(201).json(responseMaker('Success', data[0]))
@@ -67,23 +73,30 @@ class ActivityGroupController {
 
       const data = await db.query(
         `
-            SELECT * FROM activityGroups WHERE id =  ${id}
+            SELECT *, activity_id as 'id' FROM activities WHERE activity_id =  ${id}
         `
       )
       if (!data[0].length) {  // If no data is found
         return res.status(404).json(responseMaker('Not Found', data[0], `Activity with ID ${id} Not Found`))
       }
 
-      const update = await db.query(
+      const connection = await db.getConnection();
+      await connection.beginTransaction()
+
+      const update = await connection.query(
         `
-          UPDATE activityGroups
-          SET title = '${title}'
-          WHERE id = ${id}
+        UPDATE activities
+        SET title = '${title}'
+        WHERE activity_id = ${id}
         `
       )
+
+      await connection.commit()
+
+
       const updatedData = await db.query(
         `
-            SELECT * FROM activityGroups WHERE id =  ${id}
+            SELECT *, activity_id as 'id' FROM activities WHERE activity_id =  ${id}
         `
       )
       return res.json(responseMaker('Success', updatedData[0]))
@@ -98,18 +111,25 @@ class ActivityGroupController {
       const { id } = req.params;
       const data = await db.query(
         `
-            SELECT * FROM activityGroups WHERE id =  ${id}
+            SELECT *, activity_id as 'id' FROM activities WHERE activity_id =  ${id}
         `
       )
       if (!data[0].length) {  // If no data is found
         return res.status(404).json(responseMaker('Not Found', data[0], `Activity with ID ${id} Not Found`))
       }
 
-      const deleteData = await db.query(
+      const connection = await db.getConnection();
+      await connection.beginTransaction()
+
+      const deleteData = await connection.query(
         `
-          DELETE FROM activityGroups WHERE id = ${id}
+        DELETE FROM activities WHERE activity_id = ${id}
+
         `
       )
+
+      await connection.commit()
+
       return res.json(responseMaker('Success', {}, 'Success', true))
     } catch (err) {
       next(err)

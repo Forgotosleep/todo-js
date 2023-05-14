@@ -1,8 +1,14 @@
+# How to run this repo
+
+use command
+
+docker run -e MYSQL_HOST=xxxxxx -e MYSQL_USER=root -e MYSQL_PASSWORD=xxxxxx -e MYSQL_DBNAME=todo -p 3030:3030 todo-js-brian:latest
+
 # Devcode Starter using Node.js and Express.js Level 1
 
 ## Hasil Akhir yang Diharapkan
 
-Peserta dapat menampilkan message hello world dalam format JSON pada url http://localhost:3030/hello dan submit challenge di Devcode menggunakan Docker
+Peserta dapat menampilkan message hello world dalam format JSON pada url <http://localhost:3030/hello> dan submit challenge di Devcode menggunakan Docker
 
 ## Setup Environment
 
@@ -17,7 +23,7 @@ Peserta dapat menampilkan message hello world dalam format JSON pada url http://
 
 1. Pastikan anda sudah meng-install tools yang diperlukan. Jika belum, silahkan ikuti langkah-langkahnya [disini](#menginstal-tools-yang-digunakan)
 2. Uncomment baris kode yang terdapat pada file`src/app.js`
-3. Lakukan unit testing pada local anda dengan menggunakan Docker, langkah-langkahnya dapat dilihat [disini](#menjalankan-unit-testing-dengan-Docker)
+3. Lakukan unit testing pada local anda dengan menggunakan Docker, langkah-langkahnya dapat dilihat [disini](#menjalankan-unit-testing-dengan-docker)
 4. Push projek ke docker hub setelah semua test case berhasil dijalankan, langkah-langkahnya dapat dilihat [disini](#push-projek-ke-docker-hub)
 5. Submit image docker yang telah dipush ke Docker Hub ke Halaman Submission Devcode, langkah-langkahnya dapat dilihat [disini](#push-projek-ke-docker-hub)
 
@@ -32,11 +38,11 @@ Peserta dapat menampilkan message hello world dalam format JSON pada url http://
 
 ## Menginstal Tools yang Digunakan
 
--   [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
--   Docker
-    -   [Windows](https://docs.docker.com/desktop/install/windows-install/)
-    -   [Mac](https://docs.docker.com/desktop/install/mac-install/)
-    -   [Linux](https://docs.docker.com/desktop/install/linux-install/)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- Docker
+  - [Windows](https://docs.docker.com/desktop/install/windows-install/)
+  - [Mac](https://docs.docker.com/desktop/install/mac-install/)
+  - [Linux](https://docs.docker.com/desktop/install/linux-install/)
 
 ## Menjalankan Unit Testing dengan Docker
 
